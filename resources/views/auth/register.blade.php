@@ -4,9 +4,9 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-12 d-flex align-items-center justify-content-center">
-                <div class="bg-white shadow border-0 rounded border-light p-4 p-lg-5 w-100 fmxw-500">
+                <div class="border-light p-4 p-lg-5 w-100 fmxw-500">
                     <div class="text-center text-md-center mb-4 mt-md-0">
-                        <h1 class="mt-n3 mb-0 h3">{{ __('Create Account') }}</h1>
+                        <h1 class="mt-n3 mb-0 h3">{{ __('CREATE ACCOUNT') }}</h1>
                     </div>
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
@@ -84,14 +84,14 @@
                         </div>
                         <!-- End of Form -->
                         <div class="d-grid">
-                            <button type="submit" class="btn btn-gray-800">{{ __('Register') }}</button>
+                            <button type="submit" class="btn"  style="background-color: #0273b8; color: white;">{{ __('Register') }}</button>
                         </div>
                     </form>
 
                     <div class="d-flex justify-content-center align-items-center mt-4">
                         <span class="fw-normal">
                             {{ __('Already have an account?') }}
-                            <a href="{{ route('login') }}" class="fw-bold">{{ __('Login here') }}</a>
+                            <a href="{{ route('login') }}" class="fw-bold text-white">{{ __('Login here') }}</a>
                         </span>
                     </div>
                 </div>

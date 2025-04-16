@@ -14,7 +14,7 @@
 
 <body>
     <main>
-        <section class="vh-lg-100 mt-5 mt-lg-0 bg-soft d-flex align-items-center">
+        <section class="vh-lg-100 mt-5 mt-lg-0 bg-soft d-flex align-items-center" style="background:  linear-gradient(90deg, rgba(0, 120, 166, 0.7), rgba(93, 224, 230, 0.7), rgba(0, 120, 166, 0.7));">
             @yield('content')
         </section>
     </main>

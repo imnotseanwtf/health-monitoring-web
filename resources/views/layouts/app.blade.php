@@ -16,6 +16,7 @@
 </head>
 
 <body>
+    @include('sweetalert::alert')
     @include('layouts.nav')
     @include('layouts.sidenav')
     <main class="content">
@@ -23,10 +24,10 @@
         @include('layouts.topbar')
         @yield('content')
         {{-- Footer --}}
-        @include('layouts.footer')
+        {{-- @include('layouts.footer') --}}
     </main>
 
-    @yield('scripts')
+    @stack('scripts')
 </body>
 
 </html>

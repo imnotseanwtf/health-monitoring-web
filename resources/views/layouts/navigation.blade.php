@@ -5,7 +5,7 @@
                 <img src="{{ asset('images/brand/light.svg') }}" height="20" width="20" alt="Volt Logo">
             </span>
             <span class="mt-1 ms-1 sidebar-text">
-                Volt Laravel
+                Bahay ni Maria
             </span>
         </a>
     </li>
@@ -20,6 +20,15 @@
                 </svg>
             </span>
             <span class="sidebar-text">{{ __('Dashboard') }}</span>
+        </a>
+    </li>
+
+    <li class="nav-item {{ request()->routeIs('patient.index') ? 'active' : '' }}">
+        <a href="{{ route('patient.index') }}" class="nav-link">
+            <span class="sidebar-icon me-3">
+                <i class="fas fa-user-alt fa-fw"></i>
+            </span>
+            <span class="sidebar-text">{{ __('Patients') }}</span>
         </a>
     </li>
 

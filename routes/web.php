@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Web\GetBpmLatestController;
+use App\Http\Controllers\Web\PatientController;
+use App\Models\SensorsValue;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -12,6 +15,12 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::middleware('auth')->group(function () {
     Route::view('about', 'about')->name('about');
+
+    Route::resources([
+        'patient' => PatientController::class,
+    ]);
+
+    Route::get('latest-bpm/{patient}', GetBpmLatestController::class)->name('latest-bpm');
 
     Route::get('users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
 

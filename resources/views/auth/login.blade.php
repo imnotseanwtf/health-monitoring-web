@@ -3,9 +3,9 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-12 d-flex align-items-center justify-content-center">
-                <div class="bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
+                <div class="border-light p-4 p-lg-5 w-100 fmxw-500">
                     <div class="text-center text-md-center mb-4 mt-md-0">
-                        <h1 class="mb-3 h3">{{ __('Welcome back') }}</h1>
+                        <h1 class="mb-3 h3">{{ __('LOG IN') }}</h1>
                     </div>
 
                     <form class="mt-4" action="{{ route('login') }}" method="POST">
@@ -69,13 +69,14 @@
                         </div>
 
                         <div class="d-grid">
-                            <button type="submit" class="btn btn-gray-800">{{ __('Sign in') }}</button>
+                            <button type="submit" class="btn"
+                                style="background-color: #0273b8; color: white;">{{ __('Sign in') }}</button>
                         </div>
                     </form>
                     <div class="d-flex justify-content-center align-items-center mt-4">
                         <span class="fw-normal">
                             {{ __('Not registered?') }}
-                            <a href="{{ route('register') }}" class="fw-bold">{{ __('Create account') }}</a>
+                            <a href="{{ route('register') }}" class="fw-bold text-white">{{ __('Create account') }}</a>
                         </span>
                     </div>
                 </div>
