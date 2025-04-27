@@ -15,10 +15,8 @@ class GetBpmLatestController extends Controller
     {
         $latestSensorValue = $patient->sensorsValue()->latest('created_at')->first();
 
-        $bpm = $latestSensorValue->bpm;
-
         return response()->json([
-            'bpm' => $bpm
+            'sensorValue' => $latestSensorValue
         ]);
     }
 }

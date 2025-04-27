@@ -111,100 +111,122 @@
 @endsection
 
 @push('scripts')
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/modules/export-data.js"></script>
-<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
-<script type="module">
-    $(document).ready(function() {
-        const patientId = {{ $patient->id }};
-        const chart = Highcharts.chart('container', {
-            chart: {
-                type: 'spline',
-                animation: Highcharts.svg,
-                events: {
-                    load: function() {
-                        const series = this.series[0];
-                        setInterval(function() {
-                            $.ajax({
-                                url: `/latest-bpm/${patientId}`,
-                                method: 'GET',
-                                success: function(response) {
-                                    const x = new Date().getTime();
-                                    const y = response.bpm || 0;
-                                    series.addPoint([x, y], true, series.data.length >= 20);
-                                    let color;
-                                    if (y <= 50 || y >= 100) color = '#ff0000'; // Red for danger (0-50, 100-150)
-                                    else color = '#0000ff'; // Blue for normal (50-100)
-                                    series.points[series.points.length - 1].update({ color: color });
-                                },
-                                error: function(xhr) {
-                                    console.error('Failed to fetch BPM:', xhr.status, xhr.statusText);
-                                }
-                            });
-                        }, 10000);
+    <script type="module">
+        $(document).ready(function() {
+            const patientId = {{ $patient->id }};
+            const chart = Highcharts.chart('container', {
+                chart: {
+                    type: 'spline',
+                    animation: Highcharts.svg,
+                    events: {
+                        load: function() {
+                            const series = this.series[0];
+                            setInterval(function() {
+                                $.ajax({
+                                    url: `/latest-bpm/${patientId}`,
+                                    method: 'GET',
+                                    success: function(response) {
+                                        const x = new Date().getTime();
+                                        const y = response.sensorValue.bpm || 0;
+                                        const lastPoint = series.data[series.data.length - 1];
+                                        
+                                        // Check if there's existing data and the timestamps match
+                                        if (lastPoint && new Date(response.sensorValue.created_at).getTime() === new Date(lastPoint.created_at).getTime()) {
+                                            return; // Skip adding point if timestamps match
+                                        }
+
+                                        series.addPoint([x, y], true, series.data.length >= 20);
+                                        
+                                        let color;
+                                        if (y <= 50 || y >= 100) {
+                                            color = '#ff0000'; // Red for danger (0-50, 100-150)
+                                        } else {
+                                            color = '#0000ff'; // Blue for normal (50-100)
+                                        }
+                                        
+                                        series.points[series.points.length - 1].update({
+                                            color: color,
+                                            created_at: response.sensorValue.created_at // Store created_at for future comparison
+                                        });
+                                    },
+                                    error: function(xhr) {
+                                        console.error('Failed to fetch BPM:', xhr
+                                            .status, xhr.statusText);
+                                    }
+                                });
+                            }, 3000);
+                        }
                     }
-                }
-            },
-            title: {
-                text: 'BPM Monitor'
-            },
-            xAxis: {
-                type: 'datetime',
-                title: {
-                    text: 'Time'
-                }
-            },
-            yAxis: {
-                title: {
-                    text: 'Beats Per Minute (BPM)'
                 },
-                min: 0,
-                max: 150,
-                plotBands: [
-                    {
-                        from: 0,
-                        to: 50,
-                        color: 'rgba(255, 0, 0, 0.1)', // Red tint for danger range
-                        label: {
-                            text: 'Danger Range',
-                            style: { color: '#ff0000' }
-                        }
-                    },
-                    {
-                        from: 50,
-                        to: 100,
-                        color: 'rgba(68, 170, 213, 0.1)', // Light blue for normal range
-                        label: {
-                            text: 'Normal Range',
-                            style: { color: '#0000ff' }
-                        }
-                    },
-                    {
-                        from: 100,
-                        to: 150,
-                        color: 'rgba(255, 0, 0, 0.1)', // Red tint for danger range
-                        label: {
-                            text: 'Danger Range',
-                            style: { color: '#ff0000' }
-                        }
+                title: {
+                    text: 'BPM Monitor'
+                },
+                xAxis: {
+                    type: 'datetime',
+                    title: {
+                        text: 'Time'
                     }
-                ]
-            },
-            tooltip: {
-                headerFormat: '<b>{series.name}</b><br>',
-                pointFormat: '{point.x:%H:%M:%S}: {point.y} BPM {point.danger}',
-                pointFormatter: function() {
-                    const status = this.y <= 50 || this.y >= 100 ? '<span style="color:#ff0000">(Danger)</span>' : '';
-                    return `${Highcharts.dateFormat('%H:%M:%S', this.x)}: ${this.y} BPM ${status}`;
-                }
-            },
-            series: [{
-                name: 'BPM',
-                data: []
-            }]
+                },
+                yAxis: {
+                    title: {
+                        text: 'Beats Per Minute (BPM)'
+                    },
+                    min: 0,
+                    max: 150,
+                    plotBands: [{
+                            from: 0,
+                            to: 50,
+                            color: 'rgba(255, 0, 0, 0.1)', // Red tint for danger range
+                            label: {
+                                text: 'Danger Range',
+                                style: {
+                                    color: '#ff0000'
+                                }
+                            }
+                        },
+                        {
+                            from: 50,
+                            to: 100,
+                            color: 'rgba(68, 170, 213, 0.1)', // Light blue for normal range
+                            label: {
+                                text: 'Normal Range',
+                                style: {
+                                    color: '#0000ff'
+                                }
+                            }
+                        },
+                        {
+                            from: 100,
+                            to: 150,
+                            color: 'rgba(255, 0, 0, 0.1)', // Red tint for danger range
+                            label: {
+                                text: 'Danger Range',
+                                style: {
+                                    color: '#ff0000'
+                                }
+                            }
+                        }
+                    ]
+                },
+                tooltip: {
+                    headerFormat: '<b>{series.name}</b><br>',
+                    pointFormat: '{point.x:%H:%M:%S}: {point.y} BPM {point.danger}',
+                    pointFormatter: function() {
+                        const status = this.y <= 50 || this.y >= 100 ?
+                            '<span style="color:#ff0000">(Danger)</span>' : '';
+                        return `${Highcharts.dateFormat('%H:%M:%S', this.x)}: ${this.y} BPM ${status}`;
+                    }
+                },
+                series: [{
+                    name: 'BPM',
+                    data: []
+                }]
+            });
         });
-    });
-</script>
+    </script>
 @endpush

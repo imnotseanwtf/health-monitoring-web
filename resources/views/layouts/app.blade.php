@@ -13,9 +13,12 @@
 
     <!-- Scripts -->
     @vite('resources/js/app.js')
+
+    @livewireStyles
 </head>
 
 <body>
+    
     @include('sweetalert::alert')
     @include('layouts.nav')
     @include('layouts.sidenav')
@@ -28,6 +31,7 @@
     </main>
 
     @stack('scripts')
+    @livewireScripts
 </body>
 
 </html>

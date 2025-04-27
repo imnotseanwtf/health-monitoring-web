@@ -67,12 +67,29 @@ void loop() {
     lastBeat = currentTime;  // Update the last beat time
   }
 
-  if (bpm > highBpmThreshold) {
-    Serial.println("High BPM detected - Sending immediately.");
+  // Array to store last 10 BPM values
+  static int lastBpmValues[10] = {0};
+  static int bpmIndex = 0;
+
+  // Store current BPM value
+  lastBpmValues[bpmIndex] = bpm;
+  bpmIndex = (bpmIndex + 1) % 10;
+
+  // Check if all last 10 values are above threshold
+  bool allHigh = true;
+  for (int i = 0; i < 10; i++) {
+    if (lastBpmValues[i] <= highBpmThreshold || lastBpmValues[i] == 0) {
+      allHigh = false;
+      break;
+    }
+  }
+
+  if (allHigh) {
+    Serial.println("Consistently high BPM detected - Sending immediately.");
     storedSensorsValue(bpm, deviceIdentifier);
     lastDataSent = millis();
   }
-
+  
   // Send data at normal interval if due
   if (millis() - lastDataSent >= normalInterval && bpm > 0) {
     Serial.print("Normal interval sending. Last valid BPM: ");
