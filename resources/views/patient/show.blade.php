@@ -115,7 +115,6 @@
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-
     <script type="module">
         $(document).ready(function() {
             const patientId = {{ $patient->id }};
@@ -143,10 +142,10 @@
                                         series.addPoint([x, y], true, series.data.length >= 20);
                                         
                                         let color;
-                                        if (y <= 50 || y >= 100) {
-                                            color = '#ff0000'; // Red for danger (0-50, 100-150)
+                                        if (y >= 120 || y <= 50) {
+                                            color = '#ff0000'; // Red for danger (120+ or 50 below)
                                         } else {
-                                            color = '#0000ff'; // Blue for normal (50-100)
+                                            color = '#0000ff'; // Blue for normal (51-119)
                                         }
                                         
                                         series.points[series.points.length - 1].update({
@@ -177,13 +176,13 @@
                         text: 'Beats Per Minute (BPM)'
                     },
                     min: 0,
-                    max: 150,
+                    max: 200,
                     plotBands: [{
                             from: 0,
                             to: 50,
-                            color: 'rgba(255, 0, 0, 0.1)', // Red tint for danger range
+                            color: 'rgba(255, 0, 0, 0.1)', // Red tint for danger range (below 50)
                             label: {
-                                text: 'Danger Range',
+                                text: 'Danger Range (Low)',
                                 style: {
                                     color: '#ff0000'
                                 }
@@ -191,7 +190,7 @@
                         },
                         {
                             from: 50,
-                            to: 100,
+                            to: 120,
                             color: 'rgba(68, 170, 213, 0.1)', // Light blue for normal range
                             label: {
                                 text: 'Normal Range',
@@ -201,11 +200,11 @@
                             }
                         },
                         {
-                            from: 100,
-                            to: 150,
-                            color: 'rgba(255, 0, 0, 0.1)', // Red tint for danger range
+                            from: 120,
+                            to: 200,
+                            color: 'rgba(255, 0, 0, 0.1)', // Red tint for danger range (above 120)
                             label: {
-                                text: 'Danger Range',
+                                text: 'Danger Range (High)',
                                 style: {
                                     color: '#ff0000'
                                 }
@@ -217,7 +216,7 @@
                     headerFormat: '<b>{series.name}</b><br>',
                     pointFormat: '{point.x:%H:%M:%S}: {point.y} BPM {point.danger}',
                     pointFormatter: function() {
-                        const status = this.y <= 50 || this.y >= 100 ?
+                        const status = (this.y >= 120 || this.y <= 50) ?
                             '<span style="color:#ff0000">(Danger)</span>' : '';
                         return `${Highcharts.dateFormat('%H:%M:%S', this.x)}: ${this.y} BPM ${status}`;
                     }
