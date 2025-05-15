@@ -53,48 +53,216 @@
 
     <div class="container-fluid">
         <div class="card">
-            <div class="card-header">
-                <div>View Patient</div>
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <div>Patients</div>
+                <a href="{{ route('medical-history.index', $patient->id) }}" class="btn btn-primary">View Medical History</a>
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-6 form-group">
-                        <label for="name">{{ __('Name') }}</label>
+                    <div class="col-md-4 form-group">
+                        <label for="last_name">{{ __('Last Name') }}</label>
                         <div class="input-group">
-                            <input name="name" type="text" id="view_name" @class(['form-control'])
-                                placeholder="{{ __('Name') }}" value="{{ $patient->name }}" readonly>
+                            <input name="last_name" type="text" id="view_last_name" @class(['form-control'])
+                                value="{{ $patient->last_name }}" readonly>
                         </div>
                     </div>
 
-                    <div class="col-6 form-group">
+                    <div class="col-md-4 form-group">
+                        <label for="first_name">{{ __('First Name') }}</label>
+                        <div class="input-group">
+                            <input name="first_name" type="text" id="view_first_name" @class(['form-control'])
+                                value="{{ $patient->first_name }}" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 form-group">
+                        <label for="middle_name">{{ __('Middle Name') }}</label>
+                        <div class="input-group">
+                            <input name="middle_name" type="text" id="view_middle_name" @class(['form-control'])
+                                value="{{ $patient->middle_name }}" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 form-group mt-3">
+                        <label for="maiden_name">{{ __('Maiden Name') }}</label>
+                        <div class="input-group">
+                            <input name="maiden_name" type="text" id="view_maiden_name" @class(['form-control'])
+                                value="{{ $patient->maiden_name }}" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-md-8 form-group mt-3">
+                        <label for="address">{{ __('Address') }}</label>
+                        <div class="input-group">
+                            <input name="address" type="text" id="view_address" @class(['form-control'])
+                                value="{{ $patient->address }}" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 form-group mt-3">
+                        <label for="city">{{ __('City') }}</label>
+                        <div class="input-group">
+                            <input name="city" type="text" id="view_city" @class(['form-control'])
+                                value="{{ $patient->city }}" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 form-group mt-3">
+                        <label for="province">{{ __('Province') }}</label>
+                        <div class="input-group">
+                            <input name="province" type="text" id="view_province" @class(['form-control'])
+                                value="{{ $patient->province }}" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 form-group mt-3">
+                        <label for="zip">{{ __('ZIP Code') }}</label>
+                        <div class="input-group">
+                            <input name="zip" type="text" id="view_zip" @class(['form-control'])
+                                value="{{ $patient->zip }}" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 form-group mt-3">
                         <label for="birth_date">{{ __('Birth Date') }}</label>
                         <div class="input-group">
                             <input name="birth_date" type="date" id="view_birth_date" @class(['form-control'])
-                                placeholder="{{ __('Birth Date') }}" value="{{ $patient->birth_date }}" readonly>
+                                value="{{ $patient->birth_date }}" readonly>
                         </div>
                     </div>
 
-                    <div class="col-6 form-group mt-3">
+                    <div class="col-md-4 form-group mt-3">
+                        <label for="birth_place">{{ __('Birth Place') }}</label>
+                        <div class="input-group">
+                            <input name="birth_place" type="text" id="view_birth_place" @class(['form-control'])
+                                value="{{ $patient->birth_place }}" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 form-group mt-3">
+                        <label for="phone">{{ __('Phone') }}</label>
+                        <div class="input-group">
+                            <input name="phone" type="text" id="view_phone" @class(['form-control'])
+                                value="{{ $patient->phone }}" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 form-group mt-3">
+                        <label for="marital_status">{{ __('Marital Status') }}</label>
+                        <div class="input-group">
+                            <input name="marital_status" type="text" id="view_marital_status" @class(['form-control'])
+                                value="{{ $patient->marital_status->description }}" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mt-4">
+                        <h5>Spouse Information</h5>
+                    </div>
+
+                    <div class="col-md-3 form-group mt-2">
+                        <label for="spouse_last_name">{{ __('Last Name') }}</label>
+                        <div class="input-group">
+                            <input name="spouse_last_name" type="text" id="view_spouse_last_name" @class(['form-control'])
+                                value="{{ $patient->spouse_last_name }}" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 form-group mt-2">
+                        <label for="spouse_first_name">{{ __('First Name') }}</label>
+                        <div class="input-group">
+                            <input name="spouse_first_name" type="text" id="view_spouse_first_name" @class(['form-control'])
+                                value="{{ $patient->spouse_first_name }}" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 form-group mt-2">
+                        <label for="spouse_middle_name">{{ __('Middle Name') }}</label>
+                        <div class="input-group">
+                            <input name="spouse_middle_name" type="text" id="view_spouse_middle_name" @class(['form-control'])
+                                value="{{ $patient->spouse_middle_name }}" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 form-group mt-2">
+                        <label for="spouse_maiden_name">{{ __('Maiden Name') }}</label>
+                        <div class="input-group">
+                            <input name="spouse_maiden_name" type="text" id="view_spouse_maiden_name" @class(['form-control'])
+                                value="{{ $patient->spouse_maiden_name }}" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mt-4">
+                        <h5>Emergency Contact</h5>
+                    </div>
+
+                    <div class="col-md-4 form-group mt-2">
+                        <label for="emergency_contact_name">{{ __('Name') }}</label>
+                        <div class="input-group">
+                            <input name="emergency_contact_name" type="text" id="view_emergency_contact_name" @class(['form-control'])
+                                value="{{ $patient->emergency_contact_name }}" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 form-group mt-2">
+                        <label for="emergency_contact_relationship">{{ __('Relationship') }}</label>
+                        <div class="input-group">
+                            <input name="emergency_contact_relationship" type="text" id="view_emergency_contact_relationship" @class(['form-control'])
+                                value="{{ $patient->emergency_contact_relationship }}" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 form-group mt-2">
+                        <label for="emergency_contact_phone">{{ __('Phone') }}</label>
+                        <div class="input-group">
+                            <input name="emergency_contact_phone" type="text" id="view_emergency_contact_phone" @class(['form-control'])
+                                value="{{ $patient->emergency_contact_phone }}" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mt-4">
+                        <h5>Guardian Information</h5>
+                    </div>
+
+                    <div class="col-md-6 form-group mt-2">
+                        <label for="guardian_name">{{ __('Name') }}</label>
+                        <div class="input-group">
+                            <input name="guardian_name" type="text" id="view_guardian_name" @class(['form-control'])
+                                value="{{ $patient->guardian_name }}" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 form-group mt-2">
+                        <label for="guardian_phone">{{ __('Phone') }}</label>
+                        <div class="input-group">
+                            <input name="guardian_phone" type="text" id="view_guardian_phone" @class(['form-control'])
+                                value="{{ $patient->guardian_phone }}" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mt-4">
+                        <h5>Physical Information</h5>
+                    </div>
+
+                    <div class="col-md-4 form-group mt-2">
                         <label for="height">{{ __('Height (cm)') }}</label>
                         <div class="input-group">
                             <input name="height" type="number" id="view_height" @class(['form-control'])
-                                placeholder="{{ __('Height (cm)') }}" value="{{ $patient->height }}" readonly>
+                                value="{{ $patient->height }}" readonly>
                         </div>
                     </div>
 
-                    <div class="col-6 form-group mt-3">
+                    <div class="col-md-4 form-group mt-2">
                         <label for="weight">{{ __('Weight (kg)') }}</label>
                         <div class="input-group">
                             <input name="weight" type="number" id="view_weight" @class(['form-control'])
-                                placeholder="{{ __('Weight (kg)') }}" value="{{ $patient->weight }}" readonly>
+                                value="{{ $patient->weight }}" readonly>
                         </div>
                     </div>
 
-                    <div class="col-12 form-group mt-3">
+                    <div class="col-md-4 form-group mt-2">
                         <label for="device_identifier">{{ __('Device Identifier') }}</label>
                         <div class="input-group">
-                            <input name="device_identifier" type="text" id="view_device_identifier"
-                                @class(['form-control']) placeholder="{{ __('Device Identifier') }}"
+                            <input name="device_identifier" type="text" id="view_device_identifier" @class(['form-control'])
                                 value="{{ $patient->device_identifier }}" readonly>
                         </div>
                     </div>
@@ -175,7 +343,7 @@
                     title: {
                         text: 'Beats Per Minute (BPM)'
                     },
-                    min: 0,
+                min: 0,
                     max: 200,
                     plotBands: [{
                             from: 0,

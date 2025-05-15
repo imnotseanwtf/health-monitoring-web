@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MedicalHistoryController;
 use App\Http\Controllers\Web\GetBpmLatestController;
 use App\Http\Controllers\Web\PatientController;
 use App\Models\SensorsValue;
@@ -18,6 +19,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resources([
         'patient' => PatientController::class,
+        'medical-history' => MedicalHistoryController::class,
     ]);
 
     Route::get('latest-bpm/{patient}', GetBpmLatestController::class)->name('latest-bpm');
